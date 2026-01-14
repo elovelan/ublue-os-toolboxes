@@ -1,4 +1,4 @@
-FROM quay.io/toolbx/arch-toolbox@sha256:9b1583782279e2032ecbb1059a51a531c0454712e4ffbbd7dc31408714f25554 AS arch-toolbox
+FROM quay.io/toolbx/arch-toolbox AS arch-toolbox
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
@@ -20,7 +20,7 @@ RUN sed -i 's/#Color/Color/g' /etc/pacman.conf && \
 RUN git clone https://github.com/89luca89/distrobox.git --single-branch /tmp/distrobox && \
     cp /tmp/distrobox/distrobox-host-exec /usr/bin/distrobox-host-exec && \
     ln -s /usr/bin/distrobox-host-exec /usr/bin/flatpak && \
-    wget https://github.com/1player/host-spawn/releases/download/$(cat /tmp/distrobox/distrobox-host-exec | grep host_spawn_version= | cut -d "\"" -f 2)/host-spawn-$(uname -m) -O /usr/bin/host-spawn && \
+    wget --progress=dot:mega https://github.com/1player/host-spawn/releases/download/$(cat /tmp/distrobox/distrobox-host-exec | grep host_spawn_version= | cut -d "\"" -f 2)/host-spawn-$(uname -m) -O /usr/bin/host-spawn && \
     chmod +x /usr/bin/host-spawn && \
     rm -drf /tmp/distrobox
 
